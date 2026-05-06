@@ -1,4 +1,3 @@
-import argparse
 import re
 import time
 from datetime import datetime
@@ -241,34 +240,5 @@ def crawl_sh_air_data():
         raise
 
 
-def start_scheduler():
-    from apscheduler.schedulers.blocking import BlockingScheduler
-
-    scheduler = BlockingScheduler(timezone="Asia/Shanghai")
-    scheduler.add_job(crawl_sh_air_data, "interval", hours=1)
-
-    print("===== 定时爬虫已启动，按 Ctrl+C 停止程序 =====")
-    try:
-        scheduler.start()
-    except (KeyboardInterrupt, SystemExit):
-        scheduler.shutdown()
-        print("===== 定时爬虫已停止 =====")
-
-
-def parse_args():
-    parser = argparse.ArgumentParser(
-        description="Crawl Shanghai air-quality station hourly data."
-    )
-    parser.add_argument(
-        "--schedule",
-        action="store_true",
-        help="Run once immediately, then keep crawling every hour locally.",
-    )
-    return parser.parse_args()
-
-
 if __name__ == "__main__":
-    args = parse_args()
     crawl_sh_air_data()
-    if args.schedule:
-        start_scheduler()
