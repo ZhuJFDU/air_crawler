@@ -3,7 +3,7 @@ name: Shanghai Air Crawler
 on:
   schedule:
     # GitHub Actions cron uses UTC. This runs daily at 00:10 Asia/Shanghai.
-    - cron: "10 16 * * *"
+    - cron: "25 17 * * *"
   workflow_dispatch:
 
 permissions:
