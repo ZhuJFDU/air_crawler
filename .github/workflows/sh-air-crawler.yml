@@ -2,8 +2,6 @@ name: Shanghai Air Crawler
 
 on:
   schedule:
-    # Temporary verification: run a lightweight smoke job every 5 minutes.
-    - cron: "*/5 * * * *"
     # Daily crawler run at 00:10 Asia/Shanghai. GitHub Actions cron uses UTC.
     - cron: "10 16 * * *"
   workflow_dispatch:
@@ -16,16 +14,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  schedule-smoke:
-    if: github.event_name == 'schedule' && github.event.schedule == '*/5 * * * *'
-    runs-on: ubuntu-latest
-
-    steps:
-      - name: Confirm schedule trigger
-        run: date
-
   crawl:
-    if: github.event_name == 'workflow_dispatch' || github.event.schedule == '10 16 * * *'
     runs-on: ubuntu-latest
     env:
       TZ: Asia/Shanghai
